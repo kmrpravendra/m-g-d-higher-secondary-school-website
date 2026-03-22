@@ -1,0 +1,100 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-06T13:53:47.879Z",
+  "summary": "Diff adds a full TanStack Router + React Query frontend with public and authenticated management areas, plus a single Motoko backend actor that defines models for students, attendance, fees, monthly tests, and exams and enforces an authorization layer. Several requirements appear implemented at a UI/routing level (public layout with contact info + Instagram link; /manage routes gated by RequireAuth; navigation; loading/error states; non-blue primary theme). However, the backend diff is truncated, so persistence and some API/AC specifics cannot be confirmed from the provided evidence.",
+  "missing_requirements": [
+    {
+      "id": "REQ-3",
+      "requirement": "Student profile records persist across page reloads.",
+      "reason": "backend/main.mo shows in-memory Map-based storage declarations, but the diff excerpt does not show any stable variables, persistence mechanism, or upgrade hooks to persist student records across canister upgrades/reloads.",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Backend prevents duplicate attendance entries for the same student+date (update instead of creating another).",
+      "reason": "Attendance model and Map storage are shown, but the provided excerpt does not show recordAttendance/updateAttendance logic enforcing uniqueness by (studentId, date).",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Backend can return total amount collected within a date range for fees.",
+      "reason": "Fee model and feeRecords storage are shown, but the excerpt does not show any API that computes/returns totals over a date range.",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "requirement": "Add generated static images under frontend/public/assets/generated (crest, homepage hero, favicon) and render them in the UI without backend image serving.",
+      "reason": "UI references /assets/generated/school-crest.dim_512x512.png, but the diff summary does not show the required generated image files being added under frontend/public/assets/generated, nor evidence of the hero image or favicon being present/used (files may be in omitted additions, but not verifiable from provided diff).",
+      "evidence": [
+        "frontend/src/components/layout/PublicLayout.tsx",
+        "(No shown additions under frontend/public/assets/generated in diff summary)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Custom authorization/access-control system with secret admin token initialization via URL parameter (caffeineAdminToken) and permission checks in backend.",
+      "reason": "BuildRequest specifies only Internet Identity for authentication and does not request an additional secret-token-based admin initialization mechanism or role/permission system.",
+      "evidence": [
+        "backend/main.mo (imports AccessControl, MixinAuthorization; permission checks)",
+        "frontend/src/hooks/useActor.ts (getSecretParameter('caffeineAdminToken') and _initializeAccessControlWithSecret)"
+      ]
+    },
+    {
+      "description": "User profile capture/setup flow (ProfileSetupDialog) and user profile APIs (save/get profiles).",
+      "reason": "Not requested in requirements; the BuildRequest focuses on admissions/attendance/fees/tests/exams modules and II-gated access, but not collecting/storing staff user profiles.",
+      "evidence": [
+        "backend/main.mo (UserProfile model; getCallerUserProfile/saveCallerUserProfile)",
+        "frontend/src/components/auth/ProfileSetupDialog.tsx",
+        "frontend/src/hooks/useQueries.ts (useGetCallerUserProfile/useSaveCallerUserProfile)"
+      ]
+    },
+    {
+      "description": "Footer attribution/link to caffeine.ai and decorative heart element.",
+      "reason": "Not requested in BuildRequest.",
+      "evidence": [
+        "frontend/src/components/layout/PublicLayout.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppErrorState.tsx",
+    "frontend/src/components/AppLoadingState.tsx",
+    "frontend/src/components/admissions/DeleteStudentDialog.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupDialog.tsx",
+    "frontend/src/components/auth/RequireAuth.tsx",
+    "frontend/src/components/layout/ManagementLayout.tsx",
+    "frontend/src/components/layout/PublicLayout.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/PublicHome.tsx",
+    "frontend/src/pages/admissions/AdmissionsListPage.tsx",
+    "frontend/src/pages/admissions/StudentDetailPage.tsx",
+    "frontend/src/pages/admissions/StudentFormPage.tsx",
+    "frontend/src/pages/attendance/AttendancePage.tsx",
+    "frontend/src/pages/exams/ExamsPage.tsx",
+    "frontend/src/pages/fees/FeesPage.tsx",
+    "frontend/src/pages/tests/MonthlyTestsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

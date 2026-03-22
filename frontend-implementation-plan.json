@@ -1,0 +1,325 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "M.G.D. Higher Secondary School Management Website (Frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Build a public Home/About page that displays school identity details and contact information in English, including a clickable Instagram link.",
+      "acceptanceCriteria": [
+        "Landing page shows the school name, address, principal, two phone numbers, and Instagram handle/link in English.",
+        "Instagram link opens the correct Instagram page (or uses the handle in a clickable link)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/PublicHome.tsx",
+          "operation": "create",
+          "description": "Create the public-facing Home/About page content in English with the required school identity fields, phone numbers, and a clickable link to the Instagram handle mgd_sahawar_ksj."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Wire the PublicHome page into the app routing as the publicly accessible landing route."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add Internet Identity login and gate all management modules behind authentication, allowing unauthenticated users to view only public pages.",
+      "acceptanceCriteria": [
+        "Unauthenticated users cannot access management routes/screens and are prompted to sign in.",
+        "After signing in with Internet Identity, management navigation becomes available."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a Login/Logout button using the selected authorization component patterns (Internet Identity + query cache clearing on logout). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/RequireAuth.tsx",
+          "operation": "create",
+          "description": "Create an auth guard wrapper that blocks management routes when not authenticated and shows a sign-in prompt (using LoginButton). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUserProfile.ts",
+          "operation": "create",
+          "description": "Add a React Query hook to fetch the caller user profile (and avoid modal flash) based on the selected authorization guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupDialog.tsx",
+          "operation": "create",
+          "description": "Prompt for user name on first login and save it using the selected authorization component flow (getCallerUserProfile/saveCallerUserProfile). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add authenticated management route grouping guarded by RequireAuth; keep public routes accessible without authentication; display ProfileSetupDialog when appropriate."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement the frontend Admissions module (list/search, create/edit, detail with photo display, delete with confirmation) backed by React Query and backend actor calls.",
+      "acceptanceCriteria": [
+        "A user can add a new student with all fields and see it in the list.",
+        "A user can edit any field and the changes persist after refresh.",
+        "A user can view a student detail page with the photo displayed.",
+        "A user can delete a student and it is removed from list and backend storage.",
+        "Search/filter works for name and mobile number."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/students/useStudents.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for searching students (name/mobile filters), fetching a single student, and mutations for create/update/delete; ensure cache invalidation/refresh after mutations."
+        },
+        {
+          "path": "frontend/src/pages/admissions/AdmissionsListPage.tsx",
+          "operation": "create",
+          "description": "Create Admissions list view with search/filter by name and mobile number, plus navigation to create and detail screens; include clear loading/error states."
+        },
+        {
+          "path": "frontend/src/pages/admissions/StudentFormPage.tsx",
+          "operation": "create",
+          "description": "Create Admissions create/edit form covering all required fields; include photo upload handling using the selected blob-storage ExternalBlob flow for uploads and previews. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/admissions/StudentDetailPage.tsx",
+          "operation": "create",
+          "description": "Create student detail view that renders all fields and displays the uploaded photo using ExternalBlob.getDirectURL() where applicable; include loading/error states."
+        },
+        {
+          "path": "frontend/src/components/admissions/DeleteStudentDialog.tsx",
+          "operation": "create",
+          "description": "Create a delete confirmation dialog for student deletion (compose shadcn-ui dialog components; do not modify immutable ui components). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register Admissions routes under the authenticated management area (list/create/edit/detail) and ensure they are reachable from management navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement the frontend Attendance module (mark attendance by date, save/update, and view per-student history over a date range).",
+      "acceptanceCriteria": [
+        "User can mark attendance for multiple students for a selected date and save successfully.",
+        "Re-opening the same date shows previously saved attendance.",
+        "User can view attendance history for a selected student over a chosen date range."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/attendance/useAttendance.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for fetching attendance by student and date range, plus mutations to record/update attendance and refresh relevant cached queries."
+        },
+        {
+          "path": "frontend/src/pages/attendance/AttendancePage.tsx",
+          "operation": "create",
+          "description": "Create attendance screen to select a date, list students, mark Present/Absent with optional note, save updates, and show loading/error states for all operations."
+        },
+        {
+          "path": "frontend/src/components/attendance/AttendanceHistoryPanel.tsx",
+          "operation": "create",
+          "description": "Create a per-student attendance history panel with date range selection and results list/table; include user-friendly empty/loading/error states."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the Attendance route under the authenticated management area and ensure it is reachable via navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Implement the frontend Fees module to record payments for a selected student and view payment history with totals over a date range.",
+      "acceptanceCriteria": [
+        "User can add a fee payment for a student and see it appear in that student's payment history.",
+        "Totals update correctly when changing the date range filter.",
+        "Data persists after refresh."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/fees/useFees.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for recording fees and fetching per-student fee history; compute and expose derived totals for a selected date range; ensure cache refresh after mutations."
+        },
+        {
+          "path": "frontend/src/pages/fees/FeesPage.tsx",
+          "operation": "create",
+          "description": "Create Fees screen with student selection, fee entry form (date, amount, payment mode, optional note/receipt reference), payment history list, and totals that respond to date range filters with loading/error states."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the Fees route under the authenticated management area and ensure it is reachable via navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Implement the frontend Monthly Tests module to add and view monthly test records per student with filters by month and subject.",
+      "acceptanceCriteria": [
+        "User can add monthly test entries for a student and retrieve them later.",
+        "Filtering by month limits results to the selected month."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/tests/useMonthlyTests.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for recording monthly test entries and fetching per-student records; support client-side filtering by month/subject with clear loading/error states."
+        },
+        {
+          "path": "frontend/src/pages/tests/MonthlyTestsPage.tsx",
+          "operation": "create",
+          "description": "Create Monthly Tests screen with student selection, add-entry form (month, subject, marks/score, optional remark), list view, and filters by month and subject."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the Monthly Tests route under the authenticated management area and ensure it is reachable via navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Implement the frontend Exams module to add and view exam records per student with at least an exam-name filter.",
+      "acceptanceCriteria": [
+        "User can add exam records for a student and view them later.",
+        "Filtering by exam name works and is reflected in the displayed list."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/exams/useExams.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for recording exams and fetching per-student exam records; support filtering by exam name and cache refresh after mutations."
+        },
+        {
+          "path": "frontend/src/pages/exams/ExamsPage.tsx",
+          "operation": "create",
+          "description": "Create Exams screen with student selection, add-entry form (exam name, exam date/session, subject, marks/grade, optional remark), list view, and exam-name filter with loading/error states."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register the Exams route under the authenticated management area and ensure it is reachable via navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Add consistent navigation for public and management areas, use React Query for fetching/caching, and provide clear loading/error states for all CRUD operations.",
+      "acceptanceCriteria": [
+        "All modules are reachable via a navigation menu.",
+        "Each module shows loading states during fetch and user-friendly error messages on failures.",
+        "Mutations (create/update/delete) refresh the relevant lists/details without manual page reload."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/PublicLayout.tsx",
+          "operation": "create",
+          "description": "Create a public layout with header/navigation to public pages and a visible LoginButton entry point; compose shadcn-ui primitives where helpful (do not modify immutable ui components). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/ManagementLayout.tsx",
+          "operation": "create",
+          "description": "Create an authenticated management layout with navigation links to Admissions, Attendance, Fees, Monthly Tests, and Exams; show current user name (from user profile) and Logout."
+        },
+        {
+          "path": "frontend/src/components/ui/AppLoadingState.tsx",
+          "operation": "create",
+          "description": "Create a small shared loading state component used across pages to standardize loading UI (compose existing ui components; do not modify immutable ui components). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ui/AppErrorState.tsx",
+          "operation": "create",
+          "description": "Create a small shared error state component that turns common backend/authorization errors into user-friendly messages; reuse across modules."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire layouts and navigation into the routing tree; ensure all management modules are reachable and guarded; ensure React Query-driven pages use consistent loading/error handling components."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Adjust QueryClient configuration if needed to improve UX for mutations (e.g., sensible retry defaults) and ensure logout clears cached data via the LoginButton flow."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Define and apply a coherent school-appropriate visual theme (no blue/purple primary) consistently across public pages and management modules.",
+      "acceptanceCriteria": [
+        "UI uses a consistent palette, spacing, and typography across all pages.",
+        "Primary brand colors are not blue/purple.",
+        "All main screens (Home/About, Admissions, Attendance, Fees, Monthly Tests, Exams) match the same design system."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global theme tokens/styles (Tailwind + CSS variables) for a consistent school-appropriate palette (e.g., greens/oranges neutrals), typography, and spacing; ensure primary colors are not blue/purple."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Update Tailwind theme extensions as needed to support the chosen palette/typography and ensure consistent design across layouts and modules."
+        },
+        {
+          "path": "frontend/src/components/layout/PublicLayout.tsx",
+          "operation": "modify",
+          "description": "Apply the shared theme consistently in the public layout (header/sections/typography) without introducing conflicting colors."
+        },
+        {
+          "path": "frontend/src/components/layout/ManagementLayout.tsx",
+          "operation": "modify",
+          "description": "Apply the shared theme consistently in the management layout navigation and content wrapper to match public pages."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Add the required generated static images under frontend/public/assets/generated and render them in the UI via static paths (no backend image serving).",
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated.",
+        "Frontend references the images via static paths and displays them correctly.",
+        "No backend endpoints are used to serve the generated static images."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/school-crest.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated static image asset (school emblem/crest) at the required path for direct frontend use."
+        },
+        {
+          "path": "frontend/public/assets/generated/home-hero.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated static image asset (homepage hero illustration) at the required path for direct frontend use."
+        },
+        {
+          "path": "frontend/public/assets/generated/favicon-school.dim_128x128.png",
+          "operation": "create",
+          "description": "Add the generated static image asset (favicon/icon) at the required path for direct frontend use."
+        },
+        {
+          "path": "frontend/src/pages/PublicHome.tsx",
+          "operation": "modify",
+          "description": "Render frontend/public/assets/generated/home-hero.dim_1600x600.png and frontend/public/assets/generated/school-crest.dim_512x512.png within the public Home page UI via static asset paths (no backend usage)."
+        },
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Wire the favicon to frontend/public/assets/generated/favicon-school.dim_128x128.png using a static reference so it loads without any backend involvement."
+        },
+        {
+          "path": "frontend/src/components/layout/PublicLayout.tsx",
+          "operation": "modify",
+          "description": "Optionally include the crest image frontend/public/assets/generated/school-crest.dim_512x512.png in the header/branding area to reinforce identity via static asset paths."
+        }
+      ]
+    }
+  ]
+}

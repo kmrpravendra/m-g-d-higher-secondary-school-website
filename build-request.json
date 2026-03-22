@@ -1,0 +1,299 @@
+{
+  "kind": "build_request",
+  "title": "School management website for M.G.D. Higher Secondary School (Admissions, Attendance, Fees, Tests, Exams)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a public-facing Home/About page that displays the school identity and contact information in English, including: School name \"M.G.D. Higher Secondary School\", address \"Sarsawa, Sahawar, Kasganj\", principal name \"Mr. Pravendra Kumar\", contact numbers \"9410010341\" and \"7467070958\", and an Instagram link/handle \"mgd_sahawar_ksj\".",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "School name - m.g.d. higher secondary school \nSchool address - sarsawa,sahawar kasganj\nPrincipal - Mr.pravendra kumar\nSchool contact no. 9410010341,7467070958\nSchool insta account - mgd_sahawar_ksj"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Landing page shows the school name, address, principal, two phone numbers, and Instagram handle/link in English.",
+        "Instagram link opens the correct Instagram page (or uses the handle in a clickable link)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add Internet Identity login and restrict all student-data management features (admissions, attendance, fees, monthly tests, exams) to authenticated users only; unauthenticated users can only view the public-facing school pages.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a school website for manage students data like admission...attendance,fee submission,monthly test record,exam record"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users cannot access management routes/screens and are prompted to sign in.",
+        "After signing in with Internet Identity, management navigation becomes available."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement backend data models and CRUD APIs for Student Admissions/Profiles with the following fields: student name, father name, mother name, date of birth, caste, mobile number, Aadhaar number, PEN number, photo, and address.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "admission(all details eg- students name,father name ,mother name,date of birth,caste,mobile number aadhar number,pen number,photo address)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes create/read/update/delete operations for student profiles.",
+        "Student profile records persist across page reloads.",
+        "All listed fields are stored and returned by the backend."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Create a frontend Admissions module with: (1) student list view with search/filter (at minimum by name and mobile number), (2) create student form including all required fields, (3) edit student form, (4) student detail view showing all fields including the uploaded photo, and (5) delete student action with confirmation.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "manage students data like admission(all details ... photo address)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A user can add a new student with all fields and see it in the list.",
+        "A user can edit any field and the changes persist after refresh.",
+        "A user can view a student detail page with the photo displayed.",
+        "A user can delete a student and it is removed from list and backend storage.",
+        "Search/filter works for name and mobile number."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement Attendance tracking: store per-student attendance entries by date with a status (e.g., Present/Absent) and optional note; provide backend APIs to record, update, and query attendance by date range and by student.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "attendance"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend supports writing attendance for a student on a specific date.",
+        "Backend supports fetching attendance for a student over a date range.",
+        "Backend prevents duplicate entries for the same student+date (update instead of creating another)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Create a frontend Attendance module that allows selecting a date, viewing students, marking attendance (Present/Absent), saving updates, and viewing attendance history for a selected student over a date range.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "attendance"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can mark attendance for multiple students for a selected date and save successfully.",
+        "Re-opening the same date shows previously saved attendance.",
+        "User can view attendance history for a selected student over a chosen date range."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Implement Fee submission/fee management: backend storage and APIs for per-student fee payments including date, amount, payment mode (text), and optional note/receipt reference (text). Provide query APIs for payment history by student and summary totals over a date range.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "fee submission"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend supports recording a fee payment for a student with date and amount.",
+        "Backend returns payment history for a student in chronological order.",
+        "Backend can return total amount collected within a date range."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Create a frontend Fees module to record fee payments for a selected student and view fee payment history with basic totals (e.g., total paid in selected range).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "fee submission"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can add a fee payment for a student and see it appear in that student's payment history.",
+        "Totals update correctly when changing the date range filter.",
+        "Data persists after refresh."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Implement Monthly Test records: backend storage and APIs to record per-student monthly test results including month identifier (e.g., YYYY-MM), subject (text), marks/score (number or text), and optional remark.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "monthly test record"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend supports adding monthly test records for a student with month, subject, and score.",
+        "Backend can fetch monthly test records filtered by student and month."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Create a frontend Monthly Tests module to add and view monthly test records per student with filters by month and subject.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "monthly test record"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can add monthly test entries for a student and retrieve them later.",
+        "Filtering by month limits results to the selected month."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Implement Exam records: backend storage and APIs to record per-student exam results including exam name (text), exam date or session (text), subject (text), marks/grade (text/number), and optional remark.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "exam record"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend supports adding exam records for a student with exam name and results.",
+        "Backend can fetch exam records filtered by student and exam name."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Create a frontend Exams module to add and view exam records per student with filters (at minimum by exam name).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "exam record"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can add exam records for a student and view them later.",
+        "Filtering by exam name works and is reflected in the displayed list."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Add consistent app navigation for the public site and authenticated management area (Admissions, Attendance, Fees, Monthly Tests, Exams), using React Query for data fetching/caching and clear loading/error states for all CRUD operations.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Create a school website for manage students data like admission...attendance,fee submission,monthly test record,exam record"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All modules are reachable via a navigation menu.",
+        "Each module shows loading states during fetch and user-friendly error messages on failures.",
+        "Mutations (create/update/delete) refresh the relevant lists/details without manual page reload."
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Define and apply a coherent visual theme (colors, typography, layout) suitable for a school website, and enforce it consistently across public pages and management modules (avoid blue/purple as primary brand colors).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "UI uses a consistent palette, spacing, and typography across all pages.",
+        "Primary brand colors are not blue/purple.",
+        "All main screens (Home/About, Admissions, Attendance, Fees, Monthly Tests, Exams) match the same design system."
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Add generated static images to the app (stored under frontend/public/assets/generated) and render them in the UI (e.g., on the public Home page and/or app header), without serving images through the backend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images exist under frontend/public/assets/generated.",
+        "Frontend references the images via static paths and displays them correctly.",
+        "No backend endpoints are used to serve the generated static images."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo (no additional backend services).",
+    "Only Internet Identity is used for authentication (no third-party auth providers).",
+    "Do not modify any files under frontend/src/components/ui or other immutable paths listed in SYSTEM_CONTEXT; compose them instead."
+  ],
+  "nonGoals": [
+    "Teacher/staff payroll or HR management.",
+    "Timetable/class scheduling features.",
+    "SMS/email notifications to parents.",
+    "Real-time chat or live updates via WebSockets.",
+    "External database integrations (e.g., PostgreSQL, Firebase)."
+  ],
+  "imageRequirements": {
+    "required": [
+      "School emblem/crest in a clean flat style (school-crest.dim_512x512.png)",
+      "Wide homepage hero illustration showing a school building and students, minimal vector style (home-hero.dim_1600x600.png)",
+      "Simple monochrome favicon/icon based on a school building silhouette (favicon-school.dim_128x128.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [
+      "Use English for all user-facing text"
+    ],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

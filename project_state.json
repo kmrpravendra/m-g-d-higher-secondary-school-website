@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "School website for M.G.D. Higher Secondary School to manage student data (admissions, attendance, fees, test and exam records) and publish school information/contact details.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- School emblem/crest in a clean flat style (school-crest.dim_512x512.png)\n- Wide homepage hero illustration showing a school building and students, minimal vector style (home-hero.dim_1600x600.png)\n- Simple monochrome favicon/icon based on a school building silhouette (favicon-school.dim_128x128.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-public-facing-home-about-page-that-displays-the-school-identity-and-contact-information-in-english-including-school-name-m-g-d-higher-secondary-school-address-sarsawa-sahawar-kasganj-principal-name-mr-pravendra-kumar-contact-numbers-9410010341-and-7467070958-and-an-instagram-link-handle-mgd-sahawar-ksj",
+      "title": "Create a public-facing Home/About page that displays the school identity and contact information in English, including: School name \"M.G.D. Higher Secondary School\", address \"Sarsawa, Sahawar, Kasganj\", principal name \"Mr. Pravendra Kumar\", contact numbers \"9410010341\" and \"7467070958\", and an Instagram link/handle \"mgd_sahawar_ksj\".",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-internet-identity-login-and-restrict-all-student-data-management-features-admissions-attendance-fees-monthly-tests-exams-to-authenticated-users-only-unauthenticated-users-can-only-view-the-public-facing-school-pages",
+      "title": "Add Internet Identity login and restrict all student-data management features (admissions, attendance, fees, monthly tests, exams) to authenticated users only; unauthenticated users can only view the public-facing school pages.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-frontend-admissions-module-with-1-student-list-view-with-search-filter-at-minimum-by-name-and-mobile-number-2-create-student-form-including-all-required-fields-3-edit-student-form-4-student-detail-view-showing-all-fields-including-the-uploaded-photo-and-5-delete-student-action-with-confirmation",
+      "title": "Create a frontend Admissions module with: (1) student list view with search/filter (at minimum by name and mobile number), (2) create student form including all required fields, (3) edit student form, (4) student detail view showing all fields including the uploaded photo, and (5) delete student action with confirmation.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-frontend-attendance-module-that-allows-selecting-a-date-viewing-students-marking-attendance-present-absent-saving-updates-and-viewing-attendance-history-for-a-selected-student-over-a-date-range",
+      "title": "Create a frontend Attendance module that allows selecting a date, viewing students, marking attendance (Present/Absent), saving updates, and viewing attendance history for a selected student over a date range.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-frontend-fees-module-to-record-fee-payments-for-a-selected-student-and-view-fee-payment-history-with-basic-totals-e-g-total-paid-in-selected-range",
+      "title": "Create a frontend Fees module to record fee payments for a selected student and view fee payment history with basic totals (e.g., total paid in selected range).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-frontend-monthly-tests-module-to-add-and-view-monthly-test-records-per-student-with-filters-by-month-and-subject",
+      "title": "Create a frontend Monthly Tests module to add and view monthly test records per student with filters by month and subject.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-frontend-exams-module-to-add-and-view-exam-records-per-student-with-filters-at-minimum-by-exam-name",
+      "title": "Create a frontend Exams module to add and view exam records per student with filters (at minimum by exam name).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-consistent-app-navigation-for-the-public-site-and-authenticated-management-area-admissions-attendance-fees-monthly-tests-exams-using-react-query-for-data-fetching-caching-and-clear-loading-error-states-for-all-crud-operations",
+      "title": "Add consistent app navigation for the public site and authenticated management area (Admissions, Attendance, Fees, Monthly Tests, Exams), using React Query for data fetching/caching and clear loading/error states for all CRUD operations.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-define-and-apply-a-coherent-visual-theme-colors-typography-layout-suitable-for-a-school-website-and-enforce-it-consistently-across-public-pages-and-management-modules-avoid-blue-purple-as-primary-brand-colors",
+      "title": "Define and apply a coherent visual theme (colors, typography, layout) suitable for a school website, and enforce it consistently across public pages and management modules (avoid blue/purple as primary brand colors).",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-images-to-the-app-stored-under-frontend-public-assets-generated-and-render-them-in-the-ui-e-g-on-the-public-home-page-and-or-app-header-without-serving-images-through-the-backend",
+      "title": "Add generated static images to the app (stored under frontend/public/assets/generated) and render them in the UI (e.g., on the public Home page and/or app header), without serving images through the backend.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Admission/student profile management with detailed fields (name, parents’ names, DOB, caste, mobile, Aadhaar, PEN, photo, address)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Attendance management for students",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Fee submission/fee management module",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Monthly test record management",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Exam record management",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Public school info pages including school name, address, principal, contact numbers, and Instagram link",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Implement backend data models and CRUD APIs for Student Admissions/Profiles with the following fields: student name, father name, mother name, date of birth, caste, mobile number, Aadhaar number, PEN number, photo, and address.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Implement Attendance tracking: store per-student attendance entries by date with a status (e.g., Present/Absent) and optional note; provide backend APIs to record, update, and query attendance by date range and by student.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Implement Fee submission/fee management: backend storage and APIs for per-student fee payments including date, amount, payment mode (text), and optional note/receipt reference (text). Provide query APIs for payment history by student and summary totals over a date range.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Implement Monthly Test records: backend storage and APIs to record per-student monthly test results including month identifier (e.g., YYYY-MM), subject (text), marks/score (number or text), and optional remark.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-17",
+      "summary": "Implement Exam records: backend storage and APIs to record per-student exam results including exam name (text), exam date or session (text), subject (text), marks/grade (text/number), and optional remark.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "M.G.D. Higher Secondary School Website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
